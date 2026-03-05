@@ -1,0 +1,30 @@
+{
+  "nav": {
+    "home": "Home",
+    "about": "About",
+    "work": "Work",
+    "writing": "Writing",
+    "contact": "Contact"
+  },
+  "hero": {
+    "tag": "Sense · Being · Interpretation",
+    "title1": "Interpreting",
+    "title2": "existence",
+    "title3": "through the senses",
+    "desc": "In the texture, color, and scent of ingredients — I read the grain of being."
+  },
+  "about": {
+    "tag": "About",
+    "title1": "Where the senses touch,",
+    "title2": "I read the grain of being.",
+    "p1": "I am someone who tries to understand the world through ingredients. Taste, scent, texture — when the senses open, existence becomes clearer.",
+    "p2": "Cooking is my language. Not recipes, but a way of reading the time and place held within each ingredient, and the stories they carry.",
+    "p3": "This space is a record of those sensations.",
+    "based": "Based",
+    "location": "Seoul, Korea",
+    "interest": "Interests",
+    "interestVal": "Ingredients · Senses · Being · Writing",
+    "contact": "Contact",
+    "email": "your@email.com"
+  }
+}

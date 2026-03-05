@@ -1,0 +1,16 @@
+@import "tailwindcss";
+
+:root {
+  --meadow: #3F5A3C;
+  --moss: #8EA88A;
+  --stone: #C7C9C2;
+  --paper: #F3F4F1;
+  --umber: #262623;
+  --forest: #4A6A4E;
+  --fog: #A8B0A6;
+}
+
+body {
+  background-color: #F3F4F1;
+  color: #262623;
+}
