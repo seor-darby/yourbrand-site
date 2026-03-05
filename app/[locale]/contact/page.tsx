@@ -1,44 +1,33 @@
 "use client";
 
 import { useState } from "react";
-import { useRouter, usePathname } from "next/navigation";
 import { useLocale } from "next-intl";
+import Nav from "../../components/Nav";
 
 export default function Contact() {
   const locale = useLocale();
-  const pathname = usePathname();
-  const router = useRouter();
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [message, setMessage] = useState("");
   const [sent, setSent] = useState(false);
 
-  const toggleLocale = () => {
-    const nextLocale = locale === "ko" ? "en" : "ko";
-    const newPath = pathname.replace(`/${locale}`, `/${nextLocale}`);
-    router.push(newPath);
-  };
-
   const handleSubmit = async () => {
     if (!name || !email || !message) return;
-    setSent(true);
+    try {
+      const res = await fetch("/api/contact", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ name, email, message }),
+      });
+      if (res.ok) setSent(true);
+    } catch (e) {
+      console.error(e);
+    }
   };
 
   return (
     <main className="min-h-screen" style={{ backgroundColor: "#F3F4F1", color: "#262623", fontFamily: "var(--font-inter)" }}>
-      <nav className="flex justify-between items-center px-12 py-8" style={{ borderBottom: "1px solid #C7C9C2" }}>
-        <a href={`/${locale}`} style={{ fontFamily: "var(--font-cormorant)", color: "#3F5A3C", fontSize: "1.6rem", letterSpacing: "0.15em" }} className="font-light">Seor</a>
-        <div className="flex items-center gap-10 text-sm">
-          <a href={`/${locale}/about`} style={{ color: "#A8B0A6" }} onMouseEnter={e => (e.currentTarget.style.color = "#3F5A3C")} onMouseLeave={e => (e.currentTarget.style.color = "#A8B0A6")} className="transition-all duration-300">{locale === "ko" ? "소개" : "About"}</a>
-          <a href={`/${locale}/writing`} style={{ color: "#A8B0A6" }} onMouseEnter={e => (e.currentTarget.style.color = "#3F5A3C")} onMouseLeave={e => (e.currentTarget.style.color = "#A8B0A6")} className="transition-all duration-300">{locale === "ko" ? "글" : "Writing"}</a>
-          <a href="#" style={{ color: "#A8B0A6" }} onMouseEnter={e => (e.currentTarget.style.color = "#3F5A3C")} onMouseLeave={e => (e.currentTarget.style.color = "#A8B0A6")} className="transition-all duration-300">{locale === "ko" ? "작업" : "Work"}</a>
-          <a href={`/${locale}/contact`} style={{ color: "#3F5A3C", borderBottom: "1px solid #3F5A3C" }}>{locale === "ko" ? "연락" : "Contact"}</a>
-          <button onClick={toggleLocale} className="text-xs tracking-widest uppercase px-3 py-1 rounded-full transition-all duration-300" style={{ border: "1px solid #A8B0A6", color: "#A8B0A6" }} onMouseEnter={e => { e.currentTarget.style.borderColor = "#3F5A3C"; e.currentTarget.style.color = "#3F5A3C"; }} onMouseLeave={e => { e.currentTarget.style.borderColor = "#A8B0A6"; e.currentTarget.style.color = "#A8B0A6"; }}>
-            {locale === "ko" ? "EN" : "KO"}
-          </button>
-        </div>
-      </nav>
-
+      <Nav current="contact" />
       <section className="max-w-2xl mx-auto px-12 py-32">
         <p className="text-xs tracking-[0.3em] uppercase mb-10" style={{ color: "#8EA88A" }}>
           {locale === "ko" ? "연락" : "Contact"}
@@ -47,11 +36,8 @@ export default function Contact() {
           {locale === "ko" ? "함께 이야기해요" : "Let's talk"}
         </h1>
         <p className="text-sm mb-16 leading-relaxed" style={{ color: "#A8B0A6" }}>
-          {locale === "ko"
-            ? "협업, 프로젝트, 또는 그냥 안부 인사도 환영해요."
-            : "For collaborations, projects, or just to say hello."}
+          {locale === "ko" ? "협업, 프로젝트, 또는 그냥 안부 인사도 환영해요." : "For collaborations, projects, or just to say hello."}
         </p>
-
         {sent ? (
           <div className="py-16 text-center">
             <p style={{ fontFamily: "var(--font-cormorant)", fontSize: "2rem", color: "#3F5A3C" }}>
@@ -67,63 +53,28 @@ export default function Contact() {
               <label className="text-xs tracking-widest uppercase" style={{ color: "#A8B0A6" }}>
                 {locale === "ko" ? "이름" : "Name"}
               </label>
-              <input
-                type="text"
-                value={name}
-                onChange={e => setName(e.target.value)}
-                className="w-full py-3 text-sm outline-none transition-all duration-300"
-                style={{ backgroundColor: "transparent", borderBottom: "1px solid #C7C9C2", color: "#262623" }}
-                onFocus={e => (e.currentTarget.style.borderBottomColor = "#3F5A3C")}
-                onBlur={e => (e.currentTarget.style.borderBottomColor = "#C7C9C2")}
-              />
+              <input type="text" value={name} onChange={e => setName(e.target.value)} className="w-full py-3 text-sm outline-none" style={{ backgroundColor: "transparent", borderBottom: "1px solid #C7C9C2", color: "#262623" }} onFocus={e => (e.currentTarget.style.borderBottomColor = "#3F5A3C")} onBlur={e => (e.currentTarget.style.borderBottomColor = "#C7C9C2")} />
             </div>
             <div className="flex flex-col gap-2">
               <label className="text-xs tracking-widest uppercase" style={{ color: "#A8B0A6" }}>
                 {locale === "ko" ? "이메일" : "Email"}
               </label>
-              <input
-                type="email"
-                value={email}
-                onChange={e => setEmail(e.target.value)}
-                className="w-full py-3 text-sm outline-none transition-all duration-300"
-                style={{ backgroundColor: "transparent", borderBottom: "1px solid #C7C9C2", color: "#262623" }}
-                onFocus={e => (e.currentTarget.style.borderBottomColor = "#3F5A3C")}
-                onBlur={e => (e.currentTarget.style.borderBottomColor = "#C7C9C2")}
-              />
+              <input type="email" value={email} onChange={e => setEmail(e.target.value)} className="w-full py-3 text-sm outline-none" style={{ backgroundColor: "transparent", borderBottom: "1px solid #C7C9C2", color: "#262623" }} onFocus={e => (e.currentTarget.style.borderBottomColor = "#3F5A3C")} onBlur={e => (e.currentTarget.style.borderBottomColor = "#C7C9C2")} />
             </div>
             <div className="flex flex-col gap-2">
               <label className="text-xs tracking-widest uppercase" style={{ color: "#A8B0A6" }}>
                 {locale === "ko" ? "메시지" : "Message"}
               </label>
-              <textarea
-                value={message}
-                onChange={e => setMessage(e.target.value)}
-                rows={5}
-                className="w-full py-3 text-sm outline-none transition-all duration-300 resize-none"
-                style={{ backgroundColor: "transparent", borderBottom: "1px solid #C7C9C2", color: "#262623" }}
-                onFocus={e => (e.currentTarget.style.borderBottomColor = "#3F5A3C")}
-                onBlur={e => (e.currentTarget.style.borderBottomColor = "#C7C9C2")}
-              />
+              <textarea value={message} onChange={e => setMessage(e.target.value)} rows={5} className="w-full py-3 text-sm outline-none resize-none" style={{ backgroundColor: "transparent", borderBottom: "1px solid #C7C9C2", color: "#262623" }} onFocus={e => (e.currentTarget.style.borderBottomColor = "#3F5A3C")} onBlur={e => (e.currentTarget.style.borderBottomColor = "#C7C9C2")} />
             </div>
-            <button
-              onClick={handleSubmit}
-              className="self-start text-sm tracking-widest uppercase px-8 py-4 transition-all duration-300"
-              style={{ backgroundColor: "#3F5A3C", color: "#F3F4F1" }}
-              onMouseEnter={e => (e.currentTarget.style.backgroundColor = "#4A6A4E")}
-              onMouseLeave={e => (e.currentTarget.style.backgroundColor = "#3F5A3C")}
-            >
+            <button onClick={handleSubmit} className="self-start text-sm tracking-widest uppercase px-8 py-4" style={{ backgroundColor: "#3F5A3C", color: "#F3F4F1" }} onMouseEnter={e => (e.currentTarget.style.backgroundColor = "#4A6A4E")} onMouseLeave={e => (e.currentTarget.style.backgroundColor = "#3F5A3C")}>
               {locale === "ko" ? "보내기" : "Send"}
             </button>
           </div>
         )}
-
         <div className="mt-20 pt-12 flex gap-8 text-sm" style={{ borderTop: "1px solid #C7C9C2", color: "#A8B0A6" }}>
-          <a href="mailto:your@email.com" className="transition-all duration-300" onMouseEnter={e => (e.currentTarget.style.color = "#3F5A3C")} onMouseLeave={e => (e.currentTarget.style.color = "#A8B0A6")}>
-            Email
-          </a>
-          <a href="#" className="transition-all duration-300" onMouseEnter={e => (e.currentTarget.style.color = "#3F5A3C")} onMouseLeave={e => (e.currentTarget.style.color = "#A8B0A6")}>
-            Instagram
-          </a>
+          <a href="mailto:kimwoals2949@gmail.com" className="transition-all duration-300" onMouseEnter={e => (e.currentTarget.style.color = "#3F5A3C")} onMouseLeave={e => (e.currentTarget.style.color = "#A8B0A6")}>Email</a>
+          <a href="#" className="transition-all duration-300" onMouseEnter={e => (e.currentTarget.style.color = "#3F5A3C")} onMouseLeave={e => (e.currentTarget.style.color = "#A8B0A6")}>Instagram</a>
         </div>
       </section>
     </main>
