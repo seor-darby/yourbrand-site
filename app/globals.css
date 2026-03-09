@@ -10,7 +10,68 @@
   --fog: #A8B0A6;
 }
 
+/* 기본 리셋 */
+*, *::before, *::after {
+  box-sizing: border-box;
+}
+
+html {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+}
+
 body {
   background-color: #F3F4F1;
   color: #262623;
+  margin: 0;
+}
+
+/* 스크롤바 */
+::-webkit-scrollbar {
+  width: 4px;
+}
+::-webkit-scrollbar-track {
+  background: #F3F4F1;
+}
+::-webkit-scrollbar-thumb {
+  background: #C7C9C2;
+  border-radius: 2px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #8EA88A;
+}
+
+/* 선택 색상 */
+::selection {
+  background-color: #D4E0D3;
+  color: #262623;
+}
+
+/* 인풋 placeholder */
+input::placeholder,
+textarea::placeholder {
+  color: #C7C9C2;
+}
+
+/* 링크 기본 */
+a {
+  text-decoration: none;
+  color: inherit;
+}
+
+/* 부드러운 페이지 전환 */
+@keyframes fadeUp {
+  from {
+    opacity: 0;
+    transform: translateY(16px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.fade-up {
+  animation: fadeUp 0.6s ease forwards;
 }

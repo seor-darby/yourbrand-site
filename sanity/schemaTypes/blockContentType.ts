@@ -1,16 +1,5 @@
-import {defineType, defineArrayMember} from 'sanity'
-import {ImageIcon} from '@sanity/icons'
-
-/**
- * This is the schema type for block content used in the post document type
- * Importing this type into the studio configuration's `schema` property
- * lets you reuse it in other document types with:
- *  {
- *    name: 'someName',
- *    title: 'Some title',
- *    type: 'blockContent'
- *  }
- */
+import {defineType, defineArrayMember, defineField} from 'sanity'
+import {ImageIcon, PlayIcon} from '@sanity/icons'
 
 export const blockContentType = defineType({
   title: 'Block Content',
@@ -19,10 +8,6 @@ export const blockContentType = defineType({
   of: [
     defineArrayMember({
       type: 'block',
-      // Styles let you define what blocks can be marked up as. The default
-      // set corresponds with HTML tags, but you can set any title or value
-      // you want, and decide how you want to deal with it where you want to
-      // use your content.
       styles: [
         {title: 'Normal', value: 'normal'},
         {title: 'H1', value: 'h1'},
@@ -32,15 +17,11 @@ export const blockContentType = defineType({
         {title: 'Quote', value: 'blockquote'},
       ],
       lists: [{title: 'Bullet', value: 'bullet'}],
-      // Marks let you mark up inline text in the Portable Text Editor
       marks: {
-        // Decorators usually describe a single property – e.g. a typographic
-        // preference or highlighting
         decorators: [
           {title: 'Strong', value: 'strong'},
           {title: 'Emphasis', value: 'em'},
         ],
-        // Annotations can be any object structure – e.g. a link or a footnote.
         annotations: [
           {
             title: 'URL',
@@ -57,9 +38,8 @@ export const blockContentType = defineType({
         ],
       },
     }),
-    // You can add additional types here. Note that you can't use
-    // primitive types such as 'string' and 'number' in the same array
-    // as a block type.
+
+    // 이미지 블록
     defineArrayMember({
       type: 'image',
       icon: ImageIcon,
@@ -69,8 +49,62 @@ export const blockContentType = defineType({
           name: 'alt',
           type: 'string',
           title: 'Alternative Text',
-        }
-      ]
+        },
+        {
+          name: 'caption',
+          type: 'string',
+          title: '캡션',
+        },
+      ],
+    }),
+
+    // 음악 임베드 블록
+    defineArrayMember({
+      type: 'object',
+      name: 'musicEmbed',
+      title: '음악 임베드',
+      icon: PlayIcon,
+      fields: [
+        defineField({
+          name: 'youtubeUrl',
+          title: 'YouTube URL',
+          type: 'url',
+          description: 'YouTube 영상 URL을 붙여넣으세요 (예: https://www.youtube.com/watch?v=xxxxx)',
+          validation: Rule => Rule.required(),
+        }),
+        defineField({
+          name: 'startTime',
+          title: '시작 시간 (초)',
+          type: 'number',
+          description: '재생을 시작할 시간 (초 단위, 예: 90 = 1분 30초)',
+          initialValue: 0,
+        }),
+        defineField({
+          name: 'label',
+          title: '레이블',
+          type: 'string',
+          description: '예: Gustav Mahler — Symphony No.2 "Resurrection", I. Allegro maestoso',
+        }),
+        defineField({
+          name: 'autoplay',
+          title: '스크롤 시 자동 재생',
+          type: 'boolean',
+          description: '이 블록이 화면에 보일 때 자동으로 재생할까요?',
+          initialValue: true,
+        }),
+      ],
+      preview: {
+        select: {
+          title: 'label',
+          subtitle: 'youtubeUrl',
+        },
+        prepare({title, subtitle}) {
+          return {
+            title: title || '음악 임베드',
+            subtitle: subtitle,
+          }
+        },
+      },
     }),
   ],
 })

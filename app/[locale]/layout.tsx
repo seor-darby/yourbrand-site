@@ -1,19 +1,22 @@
 import type { Metadata } from "next";
-import { Cormorant_Garamond, Inter } from "next/font/google";
+import { Syne, Plus_Jakarta_Sans } from "next/font/google";
 import "../globals.css";
 import { NextIntlClientProvider } from "next-intl";
 import { getMessages } from "next-intl/server";
+import GoogleAnalytics from "../../components/GoogleAnalytics";
 
-const cormorant = Cormorant_Garamond({
+const syne = Syne({
   variable: "--font-cormorant",
   subsets: ["latin"],
-  weight: ["300", "400", "500"],
+  weight: ["400", "500", "600", "700", "800"],
+  style: ["normal"],
 });
 
-const inter = Inter({
+const plusJakarta = Plus_Jakarta_Sans({
   variable: "--font-inter",
   subsets: ["latin"],
-  weight: ["300", "400", "500"],
+  weight: ["300", "400", "500", "600"],
+  style: ["normal", "italic"],
 });
 
 export async function generateMetadata({
@@ -25,10 +28,7 @@ export async function generateMetadata({
   const isKo = locale === "ko";
 
   return {
-    title: {
-      default: "Seor",
-      template: "%s | Seor",
-    },
+    title: { default: "Seor", template: "%s | Seor" },
     description: isKo
       ? "감각을 통해 존재를 해석하는 사람 — 식재료, 글, 감각의 기록"
       : "Interpreting existence through the senses — ingredients, writing, and sensory records",
@@ -41,7 +41,7 @@ export async function generateMetadata({
       description: isKo
         ? "감각을 통해 존재를 해석하는 사람"
         : "Interpreting existence through the senses",
-      url: "https://seor-web.vercel.app",
+      url: "https://seorfield.com",
       siteName: "Seor",
       locale: isKo ? "ko_KR" : "en_US",
       type: "website",
@@ -53,15 +53,12 @@ export async function generateMetadata({
         ? "감각을 통해 존재를 해석하는 사람"
         : "Interpreting existence through the senses",
     },
-    robots: {
-      index: true,
-      follow: true,
-    },
+    robots: { index: true, follow: true },
     alternates: {
-      canonical: "https://seor-web.vercel.app",
+      canonical: "https://seorfield.com",
       languages: {
-        ko: "https://seor-web.vercel.app/ko",
-        en: "https://seor-web.vercel.app/en",
+        ko: "https://seorfield.com/ko",
+        en: "https://seorfield.com/en",
       },
     },
   };
@@ -79,7 +76,8 @@ export default async function RootLayout({
 
   return (
     <html lang={locale}>
-      <body className={`${cormorant.variable} ${inter.variable} antialiased`}>
+      <body className={`${syne.variable} ${plusJakarta.variable} antialiased`}>
+        <GoogleAnalytics />
         <NextIntlClientProvider messages={messages}>
           {children}
         </NextIntlClientProvider>
