@@ -3,7 +3,7 @@ import { Syne, Plus_Jakarta_Sans } from "next/font/google";
 import "../globals.css";
 import { NextIntlClientProvider } from "next-intl";
 import { getMessages } from "next-intl/server";
-import GoogleAnalytics from "../../components/GoogleAnalytics";
+import GoogleAnalytics from "@/components/GoogleAnalytics";
 
 const syne = Syne({
   variable: "--font-cormorant",
