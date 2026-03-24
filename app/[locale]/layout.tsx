@@ -55,6 +55,7 @@ images: [{ url: "https://seorfield.com/images/hero.jpg", width: 1200, height: 63
         : "Interpreting existence through the senses",
     },
     robots: { index: true, follow: true },
+verification: { google: "SodPK_pDn9QZu7yfbYAF-gMUCRdRgUD_QmKUVR--s-I" },
     alternates: {
       canonical: "https://seorfield.com",
       languages: {
