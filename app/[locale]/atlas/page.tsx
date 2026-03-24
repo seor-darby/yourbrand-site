@@ -45,13 +45,21 @@ export default function AtlasPage() {
     return matchSeason && matchCat && matchSearch;
   });
 
+  const categoryLabels: Record<string, string> = {
+    "채소": "Vegetable", "과일": "Fruit", "육류": "Meat", "해산물": "Seafood",
+    "유제품": "Dairy", "곡물": "Grain", "허브·향신료": "Herb & Spice", "기타": "Other",
+  };
+
+  const seasonLabels: Record<string, string> = {
+    "봄": "Spring", "여름": "Summer", "가을": "Autumn", "겨울": "Winter", "연중": "Year-round",
+  };
+
   return (
     <main className="min-h-screen" style={{ backgroundColor: "#F3F4F1", color: "#262623", fontFamily: "var(--font-inter)" }}>
       <Nav current="atlas" />
 
       <section className="max-w-5xl mx-auto px-10 md:px-16" style={{ paddingTop: "20vh", paddingBottom: "16vh" }}>
 
-        {/* 헤더 */}
         <p className="text-xs tracking-[0.35em] uppercase mb-6" style={{ color: "#C7C9C2" }}>
           {locale === "ko" ? "식재료 아틀라스" : "Ingredient Atlas"}
         </p>
@@ -94,7 +102,9 @@ export default function AtlasPage() {
                 borderBottom: activeSeason === s ? "2px solid #3F5A3C" : "2px solid transparent",
                 marginBottom: "-1px", background: "none", cursor: "pointer",
               }}>
-              {s === "All" ? (locale === "ko" ? "전체" : "All") : s}
+              {s === "All"
+                ? (locale === "ko" ? "전체" : "All")
+                : (locale === "ko" ? s : (seasonLabels[s] || s))}
             </button>
           ))}
         </div>
@@ -111,7 +121,9 @@ export default function AtlasPage() {
                 borderColor: activeCategory === c ? "#3F5A3C" : "#E0E1DC",
                 cursor: "pointer",
               }}>
-              {c === "All" ? (locale === "ko" ? "전체" : "All") : c}
+              {c === "All"
+                ? (locale === "ko" ? "전체" : "All")
+                : (locale === "ko" ? c : (categoryLabels[c] || c))}
             </button>
           ))}
         </div>
@@ -129,11 +141,7 @@ export default function AtlasPage() {
                 href={`/${locale}/atlas/${entry.slug.current}`}
                 className="group flex flex-col gap-3 transition-all duration-300"
               >
-                {/* 이미지 */}
-                <div
-                  className="w-full overflow-hidden"
-                  style={{ aspectRatio: "4/3", backgroundColor: "#ECEEE9" }}
-                >
+                <div className="w-full overflow-hidden" style={{ aspectRatio: "4/3", backgroundColor: "#ECEEE9" }}>
                   {entry.mainImage?.asset?.url ? (
                     <img
                       src={entry.mainImage.asset.url}
@@ -148,15 +156,15 @@ export default function AtlasPage() {
                     </div>
                   )}
                 </div>
-
-                {/* 정보 */}
                 <div className="flex flex-col gap-1">
                   <div className="flex items-center justify-between">
                     <span className="text-xs tracking-widest uppercase" style={{ color: "#8EA88A" }}>
-                      {entry.category}
+                      {locale === "ko" ? entry.category : (categoryLabels[entry.category] || entry.category)}
                     </span>
                     {entry.season && (
-                      <span className="text-xs" style={{ color: "#C7C9C2" }}>{entry.season}</span>
+                      <span className="text-xs" style={{ color: "#C7C9C2" }}>
+                        {locale === "ko" ? entry.season : (seasonLabels[entry.season] || entry.season)}
+                      </span>
                     )}
                   </div>
                   <h3
@@ -176,7 +184,6 @@ export default function AtlasPage() {
           </div>
         )}
 
-        {/* 결과 수 */}
         {!loading && (
           <p className="text-xs tracking-widest uppercase mt-12" style={{ color: "#D0D2CB" }}>
             {filtered.length} {locale === "ko" ? "개 항목" : filtered.length === 1 ? "entry" : "entries"}

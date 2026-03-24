@@ -23,9 +23,10 @@ export default function Nav({ current }: { current?: string }) {
   };
 
   const links = [
-    { href: `/${locale}/about`,   labelKo: "소개",  labelEn: "About",   key: "about"   },
-    { href: `/${locale}/writing`, labelKo: "글",    labelEn: "Writing", key: "writing" },
-    { href: `/${locale}/contact`, labelKo: "연락",  labelEn: "Contact", key: "contact" },
+    { href: `/${locale}/about`,   label: "About",   key: "about"   },
+    { href: `/${locale}/writing`, label: "Writing", key: "writing" },
+    { href: `/${locale}/atlas`,   label: "Atlas",   key: "atlas"   },
+    { href: `/${locale}/contact`, label: "Contact", key: "contact" },
   ];
 
   return (
@@ -39,7 +40,6 @@ export default function Nav({ current }: { current?: string }) {
         borderBottom: scrolled ? "1px solid #E8E9E5" : "none",
       }}
     >
-      {/* 로고 */}
       <a
         href={`/${locale}`}
         style={{
@@ -53,7 +53,6 @@ export default function Nav({ current }: { current?: string }) {
         SEOR
       </a>
 
-      {/* 링크 */}
       <div className="flex items-center gap-8 md:gap-12">
         {links.map((link) => (
           <a
@@ -64,22 +63,16 @@ export default function Nav({ current }: { current?: string }) {
             onMouseEnter={e => { if (current !== link.key) e.currentTarget.style.color = "#262623"; }}
             onMouseLeave={e => { if (current !== link.key) e.currentTarget.style.color = "#A8B0A6"; }}
           >
-            {locale === "ko" ? link.labelKo : link.labelEn}
+            {locale === "ko" ? link.label : link.label}
             {current === link.key && (
               <span
                 className="absolute left-0 right-0"
-                style={{
-                  bottom: "-4px",
-                  height: "1px",
-                  backgroundColor: "#3F5A3C",
-                  display: "block",
-                }}
+                style={{ bottom: "-4px", height: "1px", backgroundColor: "#3F5A3C", display: "block" }}
               />
             )}
           </a>
         ))}
 
-        {/* 언어 전환 */}
         <button
           onClick={toggleLocale}
           className="text-xs tracking-[0.2em] uppercase transition-colors duration-300"

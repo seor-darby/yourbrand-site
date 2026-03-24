@@ -50,88 +50,83 @@ export default function HomeSplit() {
           <Nav />
         </div>
 
-        {/* Hero 본문: 이미지 + 텍스트 (순서 교환) */}
+        {/* Hero 본문 */}
         <div style={{
           height: "100%",
           display: "flex",
           alignItems: "center",
           justifyContent: "center",
-          gap: "110px",
-          padding: "0 12rem",
+          gap: "80px",
+          padding: "0 8rem",
         }}>
 
-          {/* Image — 왼쪽으로 이동 */}
-          <img
-            src="/images/hero.jpg"
-            alt="Seor"
-            style={{
-              height: "78vh",
-              width: "auto",
-              display: "block",
-              flexShrink: 0,
-              marginTop: "60px",
-              opacity: visible ? 1 : 0,
-              transition: "opacity 0.9s 0.2s",
-            }}
-          />
+          {/* Image — flex: 1로 왼쪽 절반 차지, 사진은 오른쪽 정렬 */}
+          <div style={{ flex: 1, display: "flex", justifyContent: "flex-end", marginTop: "60px" }}>
+            <img
+              src="/images/hero.jpg"
+              alt="Seor"
+              style={{
+                height: "78vh",
+                width: "auto",
+                display: "block",
+                opacity: visible ? 1 : 0,
+                transition: "opacity 0.9s 0.2s",
+              }}
+            />
+          </div>
 
-          {/* TextContainer — 오른쪽으로 이동 */}
-          <div style={{ maxWidth: "500px", flexShrink: 0, marginTop: "60px", height: "70vh", display: "flex", flexDirection: "column", justifyContent: "space-between" }}>
-            <p style={{
-              fontSize: "0.68rem",
-              letterSpacing: "0.4em",
-              textTransform: "uppercase",
-              color: "#C7C9C2",
-              marginBottom: "2rem",
-              opacity: visible ? 1 : 0,
-              transition: "opacity 0.7s",
-            }}>
-              Field · Sense · Record
-            </p>
-            <h1 style={{
-              fontFamily: "var(--font-cormorant)",
-              fontSize: "clamp(3rem, 4.5vw, 5.2rem)",
-              lineHeight: 1.35,
-              fontWeight: 500,
-              color: "#262623",
-              margin: 0,
-              opacity: visible ? 1 : 0,
-              transition: "opacity 0.7s 0.1s",
-            }}>
-              {locale === "ko" ? (
-                <>아직 언어가 없는<br />것들을 위하여.</>
-              ) : (
-                <>Some things<br />are known<br />before they<br />are named.</>
-              )}
-            </h1>
+          {/* TextContainer — flex: 1로 오른쪽 절반 차지, 텍스트는 왼쪽 정렬 */}
+          <div style={{
+            flex: 1,
+            display: "flex",
+            justifyContent: "flex-start",
+            marginTop: "60px",
+          }}>
             <div style={{
-              marginTop: "2.5rem",
+              maxWidth: "500px",
+              height: "70vh",
               display: "flex",
-              alignItems: "center",
-              gap: "2.5rem",
-              opacity: visible ? 1 : 0,
-              transition: "opacity 0.7s 0.25s",
+              flexDirection: "column",
+              justifyContent: "space-between",
             }}>
-              <a href={`/${locale}/writing`} style={{
+              <p style={{
                 fontSize: "0.68rem",
-                letterSpacing: "0.3em",
-                textTransform: "uppercase",
-                color: "#262623",
-                borderBottom: "1px solid #262623",
-                paddingBottom: "3px",
-                textDecoration: "none",
-              }}>
-                {locale === "ko" ? "글 읽기" : "Read Writing"}
-              </a>
-              <a href={`/${locale}/about`} style={{
-                fontSize: "0.68rem",
-                letterSpacing: "0.3em",
+                letterSpacing: "0.4em",
                 textTransform: "uppercase",
                 color: "#C7C9C2",
-                textDecoration: "none",
+                opacity: visible ? 1 : 0,
+                transition: "opacity 0.7s",
               }}>
-                {locale === "ko" ? "소개" : "About"}
-              </a>
+                Field · Sense · Record
+              </p>
+              <h1 style={{
+                fontFamily: "var(--font-cormorant)",
+                fontSize: "clamp(3rem, 4.5vw, 5.2rem)",
+                lineHeight: 1.35,
+                fontWeight: 500,
+                color: "#262623",
+                margin: 0,
+                opacity: visible ? 1 : 0,
+                transition: "opacity 0.7s 0.1s",
+              }}>
+                {locale === "ko" ? (
+                  <>아직 언어가 없는<br />것들을 위하여.</>
+                ) : (
+                  <>Some things<br />are known<br />before they<br />are named.</>
+                )}
+              </h1>
+              <p style={{
+                fontSize: "0.78rem",
+                color: "#A8B0A6",
+                lineHeight: 1.8,
+                opacity: visible ? 1 : 0,
+                transition: "opacity 0.7s 0.25s",
+                letterSpacing: "0.02em",
+              }}>
+                {locale === "ko"
+                  ? "Writing from the field of sense."
+                  : "Writing from the field of sense."}
+              </p>
             </div>
           </div>
 
@@ -176,7 +171,7 @@ export default function HomeSplit() {
             posts.map((post, i) => (
               <a key={post.slug.current} href={`/${locale}/writing/${post.slug.current}`}
                 style={{ display: "flex", alignItems: "baseline", justifyContent: "space-between", padding: "1.75rem 0", borderTop: "1px solid #ECEEE9", borderBottom: i === posts.length - 1 ? "1px solid #ECEEE9" : "none", textDecoration: "none" }}>
-                <div style={{ display: "flex", alignItems: "baseline", gap: "1.5rem", flex: 1, minWidth: "340px" }}>
+                <div style={{ display: "flex", alignItems: "baseline", gap: "1.5rem", flex: 1, minWidth: 0 }}>
                   <span style={{ fontSize: "0.68rem", letterSpacing: "0.1em", textTransform: "uppercase", color: "#8EA88A", width: "5rem", flexShrink: 0 }}>{post.tag}</span>
                   <h3 style={{ fontFamily: "var(--font-cormorant)", fontSize: "1.3rem", color: "#262623", fontWeight: 500, overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>
                     {locale === "ko" ? post.titleKo : post.titleEn}
@@ -193,30 +188,40 @@ export default function HomeSplit() {
 
       {/* Footer */}
       <footer style={{ maxWidth: "64rem", margin: "0 auto", padding: "4rem", borderTop: "1px solid #ECEEE9", display: "flex", justifyContent: "space-between", gap: "2.5rem", flexWrap: "wrap" }}>
-        <div style={{ display: "flex", flexDirection: "column", gap: "0.75rem" }}>
-          <span style={{ fontFamily: "var(--font-cormorant)", fontSize: "1.4rem", color: "#262623", letterSpacing: "0.2em" }}>SEOR</span>
-          <p style={{ fontSize: "0.75rem", color: "#C7C9C2", maxWidth: "20rem", lineHeight: 1.8 }}>
-            {locale === "ko" ? "감각 판단을 언어로 기록합니다." : "Recording sensory judgements in language."}
-          </p>
+
+        {/* 필자 정보 */}
+        <div style={{ display: "flex", flexDirection: "column", gap: "0.6rem" }}>
+          <span style={{ fontFamily: "var(--font-cormorant)", fontSize: "1.3rem", color: "#262623", letterSpacing: "0.15em" }}>
+            {locale === "ko" ? "성야" : "Seongya"}
+          </span>
+          <a href="https://www.instagram.com/seor.field/" target="_blank" rel="noopener noreferrer"
+            style={{ fontSize: "0.75rem", color: "#8A8A84", textDecoration: "underline", textUnderlineOffset: "3px" }}>
+            @seor.field
+          </a>
+          <span style={{ fontSize: "0.75rem", color: "#8A8A84" }}>kimwoals2949@gmail.com</span>
+          <span style={{ fontSize: "0.75rem", color: "#C7C9C2" }}>
+            {locale === "ko" ? "한국 기반" : "Based in Korea"}
+          </span>
         </div>
-        <div style={{ display: "flex", gap: "4rem", fontSize: "0.75rem" }}>
-          <div style={{ display: "flex", flexDirection: "column", gap: "0.75rem" }}>
-            <span style={{ letterSpacing: "0.25em", textTransform: "uppercase", color: "#C7C9C2" }}>{locale === "ko" ? "페이지" : "Pages"}</span>
-            {[
-              { href: `/${locale}/writing`, ko: "글", en: "Writing" },
-              { href: `/${locale}/atlas`, ko: "아틀라스", en: "Atlas" },
-              { href: `/${locale}/about`, ko: "소개", en: "About" },
-              { href: `/${locale}/contact`, ko: "연락", en: "Contact" },
-            ].map((link) => (
-              <a key={link.href} href={link.href} style={{ color: "#8A8A84", textDecoration: "none" }}>{locale === "ko" ? link.ko : link.en}</a>
-            ))}
-          </div>
-          <div style={{ display: "flex", flexDirection: "column", gap: "0.75rem" }}>
-            <span style={{ letterSpacing: "0.25em", textTransform: "uppercase", color: "#C7C9C2" }}>{locale === "ko" ? "연결" : "Connect"}</span>
-            <a href="https://www.instagram.com/seor.field/" target="_blank" rel="noopener noreferrer" style={{ color: "#8A8A84", textDecoration: "none" }}>Instagram</a>
-            <a href="mailto:kimwoals2949@gmail.com" style={{ color: "#8A8A84", textDecoration: "none" }}>Email</a>
-          </div>
+
+        {/* 페이지 링크 */}
+        <div style={{ display: "flex", flexDirection: "column", gap: "0.75rem", fontSize: "0.75rem" }}>
+          <span style={{ letterSpacing: "0.25em", textTransform: "uppercase", color: "#C7C9C2" }}>
+            {locale === "ko" ? "페이지" : "Pages"}
+          </span>
+          {[
+            { href: `/${locale}/writing`, ko: "글", en: "Writing" },
+            { href: `/${locale}/atlas`, ko: "아틀라스", en: "Atlas" },
+            { href: `/${locale}/about`, ko: "소개", en: "About" },
+            { href: `/${locale}/contact`, ko: "연락", en: "Contact" },
+          ].map((link) => (
+            <a key={link.href} href={link.href} style={{ color: "#8A8A84", textDecoration: "none" }}>
+              {locale === "ko" ? link.ko : link.en}
+            </a>
+          ))}
         </div>
+
+        {/* 카피라이트 */}
         <div style={{ display: "flex", alignItems: "flex-end" }}>
           <p style={{ fontSize: "0.75rem", color: "#D0D2CB" }}>© {new Date().getFullYear()} Seor</p>
         </div>
