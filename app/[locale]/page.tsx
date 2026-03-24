@@ -99,18 +99,21 @@ export default function HomeSplit() {
               }}>
                 Field · Sense · Record
               </p>
-              <h1 style={{
-                fontFamily: "var(--font-cormorant)",
-                fontSize: "clamp(3rem, 4.5vw, 5.2rem)",
-                lineHeight: 1.35,
-                fontWeight: 500,
-                color: "#262623",
-                margin: 0,
-                opacity: visible ? 1 : 0,
-                transition: "opacity 0.7s 0.1s",
-              }}>
+              <h1 
+                className={`hero-title-wave ${visible ? 'active' : ''}`} // 클래스 추가
+                style={{
+                  fontFamily: "var(--font-cormorant)",
+                  fontSize: "clamp(3rem, 4.5vw, 5.2rem)",
+                  lineHeight: 1.35,
+                  fontWeight: 500,
+                  color: "#262623",
+                  margin: 0,
+                  // 기존 transition: "opacity 0.7s 0.1s"는 제거하거나 
+                  // CSS 애니메이션이 우선순위를 갖도록 합니다.
+                }}
+              >
                 {locale === "ko" ? (
-                  <>아직 언어가 없는<br />것들을 위하여.</>
+                  <>언어가 없는<br />것들을 위하여.</>
                 ) : (
                   <>Some things<br />are known<br />before they<br />are named.</>
                 )}
@@ -140,13 +143,13 @@ export default function HomeSplit() {
             <a key={entry.key} href={locale === "ko" ? entry.href_ko : entry.href_en}
               style={{ display: "flex", flexDirection: "column", gap: "1rem", padding: "0 2.5rem", borderLeft: i > 0 ? "1px solid #ECEEE9" : "none", textDecoration: "none" }}>
               <span style={{ fontSize: "0.68rem", letterSpacing: "0.25em", textTransform: "uppercase", color: "#8EA88A" }}>{entry.tag}</span>
-              <h2 style={{ fontFamily: "var(--font-cormorant)", fontSize: "1.6rem", lineHeight: 1.2, color: "#262623", fontWeight: 500 }}>
+              <h2 style={{ fontFamily: "var(--font-cormorant)", fontSize: "1.6rem", lineHeight: 1.2, color: "#262623", fontWeight: 600 }}>
                 {locale === "ko" ? entry.labelKo : entry.labelEn}
               </h2>
-              <p style={{ fontSize: "0.875rem", lineHeight: 1.7, color: "#A8B0A6" }}>
+              <p style={{ fontSize: "0.875rem", lineHeight: 1.7, color: "#4F534E", fontWeight: 400 }}>
                 {locale === "ko" ? entry.descKo : entry.descEn}
               </p>
-              <span style={{ fontSize: "0.68rem", letterSpacing: "0.2em", textTransform: "uppercase", color: "#C7C9C2" }}>
+              <span style={{ fontSize: "0.68rem", letterSpacing: "0.2em", textTransform: "uppercase", color: "#51524F" }}>
                 {locale === "ko" ? "더 보기 →" : "Explore →"}
               </span>
             </a>
